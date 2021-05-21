@@ -1,0 +1,25 @@
+{
+  "terraform": {
+    "backend": {
+      "s3": {
+        "region": "us-east-1",
+        "bucket": "terraform-state-UUID",
+        "key": "example/terraform.tfstate",
+        "encrypt": true,
+        "dynamodb_table": "terraform-state-UUID-lock"
+      }
+    },
+    "required_version": ">= 0.15.4",
+    "required_providers": {
+      "aws": {
+        "source": "hashicorp/aws",
+        "version": "~> 3.42"
+      }
+    }
+  },
+  "provider": {
+    "aws": {
+      "region": "us-east-1"
+    }
+  }
+}
