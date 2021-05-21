@@ -3,9 +3,10 @@
 SCRIPTDIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 
 docker run -it --rm \
-  --entrypoint /bin/sh \
+  --entrypoint /bin/zsh \
   -v "${SCRIPTDIR}/modules:/root/workdir/modules" \
   -v "${HOME}/.aws:/root/.aws" \
+  -v "${HOME}/.awsvault:/root/.awsvault/" \
   -w /root/workdir/modules \
   -e AWS_PROFILE \
   -e AWS_REGION \

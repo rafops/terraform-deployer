@@ -1,0 +1,5 @@
+auth() {
+  local vault=$1
+  shift
+  aws-vault exec $vault /bin/sh
+}
