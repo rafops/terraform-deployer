@@ -1,3 +1,5 @@
 #!/usr/bin/env bash
 
-docker build -t terraform-deployer .
+SCRIPTDIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
+
+docker build -f "${SCRIPTDIR}/docker/Dockerfile" -t terraform-deployer .
