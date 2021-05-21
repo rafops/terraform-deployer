@@ -6,6 +6,12 @@ Build deployer:
 ./build.sh
 ```
 
+Verify AWS credentials are configured correctly by running:
+
+```
+aws sts get-caller-identity
+```
+
 Run setup:
 
 ```
