@@ -1,10 +1,10 @@
 # Terraform Deployer
 
-Terraform Deployer is a bootstrap project for Terraform code. It contains the software necessary to run Terraform via a Docker container.
-
-To build deployer container:
+A bootstrap project for Terraform code. It contains the software necessary to run Terraform via a Docker container.
 
 ## Build and setup
+
+To build a deployer container:
 
 ```
 ./build.sh
