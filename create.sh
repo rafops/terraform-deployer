@@ -14,7 +14,7 @@ fi
 
 set -e
 
-cp -av "${SCRIPTDIR}/modules/_template" "${SCRIPTDIR}/modules/${module_name}"
+cp -a "${SCRIPTDIR}/modules/_template" "${SCRIPTDIR}/modules/${module_name}"
 
 # Create remote state configuration files
 terraform -chdir="modules/${module_name}" init
