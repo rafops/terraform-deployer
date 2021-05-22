@@ -32,8 +32,14 @@ role_arn=arn:aws:iam::222222222222:role/production
 mfa_serial=arn:aws:iam::111111111111:mfa/username
 ```
 
-To open a console with production role and prompt for MFA:
+To open a console using the production profile credentials that assumes a cross-account role and prompt for MFA:
 
 ```
 aws-vault exec production ./console.sh
+```
+
+To run terraform commands with aws-vault:
+
+```
+aws-vault exec <profile name> -- ./terraform.sh -chdir=modules/<module name> <terraform command>
 ```

@@ -1,4 +1,3 @@
 # Setup module
 
-This module creates a DynamoDB table that stores Terraform state lock and an S3
-bucket that stores Terraform state files.
+This module creates a DynamoDB and S3 Bucket to store state and perform locking. It also generates a remote state configuration for new module creation in modules/setup.tf.

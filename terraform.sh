@@ -11,6 +11,4 @@ terraform() {
     -e AWS_SESSION_TOKEN terraform-deployer "$@"
 }
 
-if [[ -n "$*" ]]; then
-  terraform "$@"
-fi
+[[ "$#" -gt 0 ]] && terraform "$@"
