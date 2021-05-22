@@ -5,7 +5,7 @@ SCRIPTDIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 source "${SCRIPTDIR}/terraform.sh"
 
 first_time_setup=1
-[[ -f "${SCRIPTDIR}/modules/setup/terraform.tf" ]] && first_time_setup=0
+[[ -f "${SCRIPTDIR}/modules/config/terraform.tf" ]] && first_time_setup=0
 
 terraform_setup() {
   terraform -chdir=modules/setup "$@"

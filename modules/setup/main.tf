@@ -1,7 +1,3 @@
-provider "aws" {
-  region = var.aws_region
-}
-
 locals {
   bucket_name = "terraform-state-${random_id.suffix.hex}"
   table_name  = "terraform-state-${random_id.suffix.hex}-lock"
@@ -28,12 +24,13 @@ resource "aws_dynamodb_table" "terraform_state_lock" {
   }
 }
 
-resource "local_file" "terraform_backend_config" {
-  content         = templatefile("${path.module}/templates/terraform.tf.tpl",
+# Used by setup module to generate its own terraform.tf
+resource "local_file" "terraform" {
+  content         = templatefile("${path.module}/_terraform.tf.tpl",
     {
+      "bucket_name" = local.bucket_name
       "module"      = basename(abspath(path.module))
       "region"      = var.aws_region
-      "bucket_name" = local.bucket_name
       "table_name"  = local.table_name
     }
   )
@@ -41,15 +38,16 @@ resource "local_file" "terraform_backend_config" {
   file_permission = "0644"
 }
 
-resource "local_file" "remote_state_config" {
-  content         = templatefile("${path.module}/templates/setup.tf.tpl",
+# Used by new modules to generate their own terraform.tf
+resource "local_file" "remote" {
+  content         = templatefile("${path.module}/_remote.tf.tpl",
     {
+      "bucket_name" = local.bucket_name
       "module"      = basename(abspath(path.module))
       "region"      = var.aws_region
-      "bucket_name" = local.bucket_name
       "table_name"  = local.table_name
     }
   )
-  filename        = "${path.module}/../setup.tf"
+  filename        = "${path.module}/remote.tf"
   file_permission = "0644"
 }

@@ -1,4 +1,4 @@
-data "terraform_remote_state" "setup" {
+data "terraform_remote_state" "remote" {
   backend = "s3"
   config  = {
     bucket         = "${bucket_name}"
@@ -9,13 +9,14 @@ data "terraform_remote_state" "setup" {
   }
 }
 
-resource "local_file" "terraform_backend_config" {
-  content         = templatefile("$${path.module}/templates/terraform.tf.tpl",
+resource "local_file" "module_backend_config" {
+  count           = basename(abspath(path.module)) == "setup" ? 0 : 1
+  content         = templatefile("$${path.module}/_terraform.tf.tpl",
     {
       "module"      = basename(abspath(path.module))
       "region"      = var.aws_region
-      "bucket_name" = data.terraform_remote_state.setup.outputs.terraform_state_bucket
-      "table_name"  = data.terraform_remote_state.setup.outputs.terraform_state_lock_table
+      "bucket_name" = data.terraform_remote_state.remote.outputs.terraform_state_bucket
+      "table_name"  = data.terraform_remote_state.remote.outputs.terraform_state_lock_table
     }
   )
   filename        = "$${path.module}/terraform.tf"
