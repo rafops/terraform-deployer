@@ -6,7 +6,7 @@ Build deployer:
 ./build.sh
 ```
 
-Verify AWS credentials are configured correctly by running:
+The use of [aws-vault](doc/aws-vault.md) is recommended to manage AWS CLI credentials. Verify AWS CLI credentials are configured correctly by running:
 
 ```
 aws sts get-caller-identity
@@ -29,7 +29,7 @@ Run terraform commands agains a module:
 ./terraform.sh -chdir=modules/custom destroy --auto-approve
 ```
 
-Alternatively, run a interactive console:
+Alternatively, run an interactive console:
 
 ```
 ./console.sh
@@ -41,42 +41,3 @@ terraform init
 terraform apply --auto-approve
 ```
 
-## aws-vault
-
-Using aws-vault to manage AWS CLI credentials is recommended. To install:
-
-```
-brew install aws-vault
-```
-
-To create a new profile named `development` and store its credentials in the keychain:
-
-```
-aws-vault add --backend=keychain development
-```
-
-To open a console with the `development` profile:
-
-```
-aws-vault exec development ./console.sh
-```
-
-To authenticate to a MFA protected `admin` role, configure `~/.aws/config`:
-
-```
-[default]
-region=us-east-1
-
-[profile development]
-
-[profile production]
-source_profile=development
-role_arn=arn:aws:iam::111111111111:role/admin
-mfa_serial=arn:aws:iam::111111111111:mfa/username
-```
-
-To open a console with the `admin` role using the `production` profile (will prompt for MFA):
-
-```
-aws-vault exec production ./console.sh
-```
