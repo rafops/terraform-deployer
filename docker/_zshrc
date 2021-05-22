@@ -1,14 +1,1 @@
 PROMPT="%(?.%F{green}√.%F{red}!)%f %B%F{240}%2~%f%b %# "
-
-auth() {
-  local profile=$1
-  if [[ $# -eq 0 ]]; then
-    profile="default"
-  else
-    shift
-  fi
-
-  set -e
-  [[ -z "$(aws-vault list --credentials | grep "$profile")" ]] && aws-vault add --prompt=terminal "$profile"
-  aws-vault exec "$profile" /bin/zsh
-}

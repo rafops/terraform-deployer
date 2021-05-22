@@ -40,3 +40,43 @@ cd custom
 terraform init
 terraform apply --auto-approve
 ```
+
+## aws-vault
+
+Using aws-vault to manage AWS CLI credentials is recommended. To install:
+
+```
+brew install aws-vault
+```
+
+To create a new profile named `development` and store its credentials in the keychain:
+
+```
+aws-vault add --backend=keychain development
+```
+
+To open a console with the `development` profile:
+
+```
+aws-vault exec development ./console.sh
+```
+
+To authenticate to a MFA protected `admin` role, configure `~/.aws/config`:
+
+```
+[default]
+region=us-east-1
+
+[profile development]
+
+[profile production]
+source_profile=development
+role_arn=arn:aws:iam::111111111111:role/admin
+mfa_serial=arn:aws:iam::111111111111:mfa/username
+```
+
+To open a console with the `admin` role using the `production` profile (will prompt for MFA):
+
+```
+aws-vault exec production ./console.sh
+```
