@@ -1,21 +1,24 @@
 #!/usr/bin/env bash
 
+module_name=$1
+shift
+
 SCRIPTDIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 # shellcheck source=./terraform.sh
 source "${SCRIPTDIR}/terraform.sh"
-
-module_name=$1
 
 if [[ -d "${SCRIPTDIR}/modules/${module_name}" ]]; then
   echo "Module ${module_name} already exists"
   exit 1
 fi
 
+set -e
+
 cp -av "${SCRIPTDIR}/modules/_template" "${SCRIPTDIR}/modules/${module_name}"
 
 # Create remote state configuration files
 terraform -chdir="modules/${module_name}" init
-terraform -chdir="modules/${module_name}" apply --auto-approve
+terraform -chdir="modules/${module_name}" apply -auto-approve
 
 # Remove temporary remote state setup files and local state files
 (

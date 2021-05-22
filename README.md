@@ -33,8 +33,8 @@ To perform terraform commands in the new module:
 ```
 ./terraform.sh -chdir=modules/modulename init
 ./terraform.sh -chdir=modules/modulename plan
-./terraform.sh -chdir=modules/modulename apply --auto-approve
-./terraform.sh -chdir=modules/modulename destroy --auto-approve
+./terraform.sh -chdir=modules/modulename apply -auto-approve
+./terraform.sh -chdir=modules/modulename destroy -auto-approve
 ```
 
 Alternatively, run an interactive console:
@@ -46,5 +46,5 @@ Alternatively, run an interactive console:
 ```
 cd modulename
 terraform init
-terraform apply --auto-approve
+terraform apply -auto-approve
 ```

@@ -12,5 +12,5 @@ terraform_setup() {
 }
 
 terraform_setup init
-terraform_setup apply --auto-approve
+terraform_setup apply -auto-approve
 [[ $first_time_setup -gt 0 ]] && terraform_setup init -force-copy
