@@ -1,12 +1,13 @@
 #!/usr/bin/env bash
 
-SCRIPTDIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 # shellcheck source=./terraform.sh
-source "${SCRIPTDIR}/terraform.sh"
+source terraform.sh
 
-first_time_setup=1
-[[ -f "${SCRIPTDIR}/terraform.tf" ]] && first_time_setup=0
+backend_configured=0
+[[ -f "terraform.tf" ]] && backend_configured=1
+
+set -e
 
 terraform init
-terraform apply -auto-approve
-[[ $first_time_setup -gt 0 ]] && terraform init -force-copy
+terraform apply -target module.terraform_backend -auto-approve
+[[ $backend_configured -eq 0 ]] && terraform init -force-copy

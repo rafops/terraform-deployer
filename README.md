@@ -1,8 +1,8 @@
 # Terraform Deployer
 
-A bootstrap project for Terraform code. It contains the software necessary to run Terraform via a Docker container.
+A bootstrap for Terraform projects. It contains a Docker container with essential software to run Terraform and a structure that follows Terraform best practices.
 
-## Build and setup
+## Deployer container
 
 To build a deployer container:
 
@@ -10,68 +10,66 @@ To build a deployer container:
 ./build.sh
 ```
 
-This document assumes your shell has AWS CLI credentials configured. To verify if credentials are configured correctly:
+## AWS CLI credentials
+
+This document assumes your shell is configured with proper credentials to run AWS CLI commands and Terraform. To verify if credentials are configured:
 
 ```
 aws sts get-caller-identity
 ```
 
-Terraform requires a one-time setup of a DynamoDB and S3 Bucket to store state and perform locking. It also updates setup module with remote state configuration that should be added to version control. To create these resources:
+## Setup remote backend
+
+Terraform requires a one-time setup of `terraform-backend` module to enable remote state and locking. It also generates a `terraform.tf` configuration to be added to the version control. To setup remote backend:
 
 ```
 ./setup.sh
 ```
 
-## Modules
+## Terraform commands and console
 
-Terraform code can be structured using many individual modules. To create a new module:
-
-```
-./create modulename
-```
-
-To perform terraform commands in the new module:
+Example of Terraform commands using the deployer container:
 
 ```
-./terraform.sh -chdir=modules/modulename init
-./terraform.sh -chdir=modules/modulename plan
-./terraform.sh -chdir=modules/modulename apply -auto-approve
-./terraform.sh -chdir=modules/modulename destroy -auto-approve
+./terraform.sh plan
+./terraform.sh apply -auto-approve
+./terraform.sh destroy -auto-approve
 ```
 
-Alternatively, run an interactive console:
+Alternatively, run the deployer container as an interactive shell:
 
 ```
 ./console.sh
 ```
 
+From the console, run Terraform commands as usual:
+
 ```
-cd modulename
-terraform init
+terraform plan
 terraform apply -auto-approve
 ```
 
-## aws-vault
+## Manage AWS CLI credentials with aws-vault
 
-The use of [aws-vault](#aws-vault) is recommended to manage AWS CLI credentials. To install aws-vault:
+The [aws-vault](#aws-vault) tool is recommended to manage AWS CLI credentials. To install `aws-vault`:
 
 ```
 brew install aws-vault
 ```
 
-Create a new profile named development to store AWS credentials using Keychain:
+Create a new profile named `development` to store AWS CLI credentials on Keychain:
 
 ```
 aws-vault add --backend=keychain development
 ```
 
-To open a console using the development profile credentials:
+To open a console using `development` credentials:
 
 ```
 aws-vault exec development ./console.sh
 ```
 
-You can use cross-account roles and MFA with the following `~/.aws/config` configuration:
+Users can assume cross-account roles and require MFA token by configuring `~/.aws/config`:
 
 ```
 [default]
@@ -85,14 +83,8 @@ role_arn=arn:aws:iam::222222222222:role/production
 mfa_serial=arn:aws:iam::111111111111:mfa/username
 ```
 
-To open a console using the production profile credentials that assumes a cross-account role and prompt for MFA:
+To open a console using `production` credentials that assumes a cross-account role and requires MFA:
 
 ```
 aws-vault exec production ./console.sh
-```
-
-To run terraform commands with aws-vault:
-
-```
-aws-vault exec <profile name> -- ./terraform.sh -chdir=modules/<module name> <terraform command>
 ```

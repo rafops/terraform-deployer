@@ -4,5 +4,5 @@ provider "aws" {
 
 module "terraform_backend" {
   source      = "./modules/terraform-backend"
-  output_file = "${path.module}/terraform_backend.tf"
+  output_file = "${path.module}/terraform.tf"
 }

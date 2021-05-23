@@ -27,7 +27,7 @@ resource "aws_dynamodb_table" "terraform_state_lock" {
 }
 
 resource "local_file" "terraform_backend" {
-  content         = templatefile("${path.module}/templates/backend.tf.tpl",
+  content         = templatefile("${path.module}/templates/terraform.tf.tpl",
     {
       "bucket_name" = local.bucket_name
       "region"      = data.aws_region.current.name
