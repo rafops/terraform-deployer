@@ -5,12 +5,8 @@ SCRIPTDIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 source "${SCRIPTDIR}/terraform.sh"
 
 first_time_setup=1
-[[ -f "${SCRIPTDIR}/modules/config/terraform.tf" ]] && first_time_setup=0
+[[ -f "${SCRIPTDIR}/terraform.tf" ]] && first_time_setup=0
 
-terraform_setup() {
-  terraform -chdir=modules/setup "$@"
-}
-
-terraform_setup init
-terraform_setup apply -auto-approve
-[[ $first_time_setup -gt 0 ]] && terraform_setup init -force-copy
+terraform init
+terraform apply -auto-approve
+[[ $first_time_setup -gt 0 ]] && terraform init -force-copy
