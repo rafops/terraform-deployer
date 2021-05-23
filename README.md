@@ -20,7 +20,7 @@ aws sts get-caller-identity
 
 ## Setup remote backend
 
-Terraform requires a one-time setup of `terraform-backend` module to enable remote state and locking. It also generates a `terraform.tf` configuration to be added to the version control. To setup remote backend:
+Terraform requires a one-time setup of `terraform-backend` module to enable remote state and locking. It also generates a `terraform.tf` configuration to be added to the version control. To run the one-time setup:
 
 ```
 ./setup.sh
