@@ -51,7 +51,7 @@ terraform apply -auto-approve
 
 ## Manage AWS CLI credentials with aws-vault
 
-The [aws-vault](#aws-vault) tool is recommended to manage AWS CLI credentials. To install `aws-vault`:
+The [aws-vault](https://github.com/99designs/aws-vault) tool is recommended to manage AWS CLI credentials. To install `aws-vault`:
 
 ```
 brew install aws-vault
