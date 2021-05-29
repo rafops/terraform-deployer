@@ -1,3 +1,6 @@
 #!/usr/bin/env bash
 
-docker build -f ./docker/Dockerfile -t terraform-deployer .
+# shellcheck source=./config.sh
+source config.sh
+
+docker_build
