@@ -19,7 +19,7 @@ resource "aws_dynamodb_table" "terraform_state_lock" {
   hash_key       = "LockID"
   read_capacity  = 1
   write_capacity = 1
- 
+
   attribute {
     name = "LockID"
     type = "S"
@@ -27,7 +27,7 @@ resource "aws_dynamodb_table" "terraform_state_lock" {
 }
 
 resource "local_file" "terraform_backend" {
-  content         = templatefile("${path.module}/templates/terraform.tf.tpl",
+  content = templatefile("${path.module}/templates/terraform.tf.tpl",
     {
       "bucket_name" = local.bucket_name
       "region"      = data.aws_region.current.name
