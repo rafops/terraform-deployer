@@ -1,17 +1,23 @@
-FROM hashicorp/terraform:0.15.4
+FROM hashicorp/terraform:1.0.0
 
 # Install system dependencies
 RUN apk update && apk --no-cache add \
+    gnupg aws-cli \
     zsh
 
-# Cache Terraform dependencies with specific version constraints
+WORKDIR /root/workdir
+
+# Cache Terraform plugins
 RUN mkdir -p /root/.terraform.d/plugin-cache
 ENV TF_PLUGIN_CACHE_DIR /root/.terraform.d/plugin-cache
 COPY versions.tf.json versions.tf.json
-RUN terraform init && rm -f versions.tf.json
+RUN terraform init
 
-# Copy ZSH configuration
+# Cache Terraform modules
+COPY main.tf main.tf
+COPY modules modules
+RUN terraform get
+
 COPY docker/_zshrc /root/.zshrc
 
-WORKDIR /root/workdir
-ENTRYPOINT ["/bin/terraform"]
+ENTRYPOINT ["zsh"]

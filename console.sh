@@ -1,6 +1,11 @@
 #!/usr/bin/env bash
 
-# shellcheck source=./config.sh
-source config.sh
+SCRIPTDIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 
-docker_run zsh
+# shellcheck source=./docker.sh
+source "$SCRIPTDIR/docker.sh"
+
+(
+    cd "$SCRIPTDIR" || exit
+    docker_run zsh
+)
