@@ -14,6 +14,6 @@ variable "aws_region" {
 }
 
 variable "pgp_key" {
-  description = "The PGP key used for encrypting secrets. Default value is set via TF_VAR_pgp_key variable."
+  description = "The PGP key used for encrypting secrets (optional)."
   default = ""
 }
