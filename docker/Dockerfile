@@ -3,7 +3,7 @@ FROM hashicorp/terraform:1.0.0
 # Install system dependencies
 RUN apk update && apk --no-cache add \
     gnupg aws-cli \
-    zsh
+    bash zsh
 
 WORKDIR /root/workdir
 

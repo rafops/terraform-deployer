@@ -2,13 +2,10 @@
 
 export SOURCE_DIR
 SOURCE_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
-
-(
-  cd "$SOURCE_DIR" || exit
-)
+cd "$SOURCE_DIR" || exit
 
 export TF_VAR_environment_name
-TF_VAR_environment_name="$(echo ${PWD##*/})"
+TF_VAR_environment_name="${PWD##*/}"
 
 export TF_VAR_environment_owner
 TF_VAR_environment_owner="$(whoami)"

@@ -18,20 +18,18 @@ To build a deployer container:
 
 ## Deployer console
 
-A console is a deployer container shell that using host credentials (.aws, .gnupg).
-
-To run a new console:
+A console is a deployer container interactive shell. To run a new console:
 
 ```
 ./console.sh
 ```
 
-The remaining of commands here documented must be executed inside a console.
+The remaining of commands here documented are intended to run from a console shell.
 
 ## Terraform backend
 
 Terraform requires a one-time setup of `terraform-backend` module to enable remote state and locking.
 
-It also generates a `terraform.tf` configuration in the root module to be included in your source control.
+The `configure-terraform-backend` command generates a `terraform.tf` configuration in the root module.
 
-A one-time setup of the backend will happen during a `terraform init` when the `terraform.tf` file does not exist.
+Add `terraform.tf` to the source control of your project.
